@@ -1,5 +1,5 @@
 #!/bin/bash
-declare -A repoHashMap=( ["ab"]="admin-backend" ["af"]="admin-frontend" ["b"]="biz-logic" ["c"]="class" ["ch"]="ch" ["cr"]="cron" ["d"]="database" ["f"]="frontend" ["g"]="gateway" ["m"]="media" ["mo"]="mosql" ["o"]="overwatch" ["p"]="post" ["pi"]="pigeon" ["r"]="referral" ["s"]="search" ["sho"]="short" ["u"]="user" ["ut"]="utils")
+declare -A repoHashMap=( ["ab"]="admin-backend" ["af"]="admin-frontend" ["b"]="biz-logic" ["c"]="class" ["ch"]="ch" ["cr"]="cron" ["d"]="database" ["f"]="frontend" ["g"]="gateway" ["m"]="media" ["mo"]="mosql" ["o"]="overwatch" ["p"]="post" ["pi"]="pigeon" ["r"]="referral" ["s"]="search" ["sho"]="short" ["u"]="user" ["ut"]="utils" )
 repoPrefix="yc-"
 path="Documents/YC/"
 defaultBranch="@staging"
@@ -19,7 +19,7 @@ do
   cd "$path$repoPrefix${repoHashMap[$i]}"
   if [ -z "$existingBranch" ]
   then
-    git checkout "$checkoutBranch"
+    git checkout "$defaultBranch"
     git checkout -b "$branch"
   else
     git checkout "$existingBranch"
