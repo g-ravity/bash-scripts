@@ -3,15 +3,37 @@ declare -A repoHashMap=( ["ab"]="admin-backend" ["af"]="admin-frontend" ["b"]="b
 repoPrefix="yc-"
 path="Documents/YC/"
 defaultBranch="@staging"
+shouldTakePull=true
 
-while getopts "r:b:c:e:" arg; do
-  case $arg in
-    r) repos=($(echo $OPTARG | tr "," "\n"));;
-    b) branch=$OPTARG;;
-    c) defaultBranch=$OPTARG;;
-    e) existingBranch=$OPTARG;;
-  esac
-done
+_setArgs(){
+  while [ "${1:-}" != "" ]; do
+    case "$1" in
+      "-r" | "--repos")
+        shift
+        repos=($(echo $1 | tr "," "\n"))
+        ;;
+      "-b" | "--branch")
+        shift
+        branch=$1
+        ;;
+      "-c" | "--checkoutFrom")
+        shift
+        defaultBranch=$1
+        ;;
+      "-e" | "--existingBranch")
+        shift
+        existingBranch=$1
+        ;;
+      "-p" | "--pull")
+        shift
+        shouldTakePull=$1!='no'
+        ;;
+    esac
+    shift
+  done
+}
+
+_setArgs $*
 
 for i in "${repos[@]}"
 do
@@ -20,9 +42,19 @@ do
   if [ -z "$existingBranch" ]
   then
     git checkout "$defaultBranch"
+    if [ "$shouldTakePull" = true ]
+    then
+      git pull origin "$defaultBranch"
+      yarn
+    fi
     git checkout -b "$branch"
   else
     git checkout "$existingBranch"
+    if [ "$shouldTakePull" = true ]
+    then
+      git pull origin "$existingBranch"
+      yarn
+    fi
   fi
 done
 
