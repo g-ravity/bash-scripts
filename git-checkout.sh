@@ -5,6 +5,19 @@ path="Documents/YC/"
 defaultBranch="@staging"
 shouldTakePull=true
 
+Help(){
+  echo
+  echo "options:"
+  echo
+  echo "-r | --repos               Shorthand for repos for which script will run."
+  echo "-b | --branch              New branch name to checkout to."
+  echo "-c | --checkoutFrom        Branch name to checkout from (default is @staging)."
+  echo "-e | --existingBranch      Existing branch name to checkout to."
+  echo "-p | --pull                Take latest pull from remote (pass 'no' to avoid)."
+  echo "-h | --help                Print this Help."
+  echo
+}
+
 _setArgs(){
   while [ "${1:-}" != "" ]; do
     case "$1" in
@@ -27,6 +40,9 @@ _setArgs(){
       "-p" | "--pull")
         shift
         shouldTakePull=$1!='no'
+        ;;
+      "-h" | "--help")
+        Help
         ;;
     esac
     shift
