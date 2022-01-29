@@ -13,6 +13,12 @@ alias prd="gh pr create -B @develop -r pranabs1ngh,anku255 -l feat-\>develop"
 # To close all tabs in VSCode
 alias ct="cliclick kd:ctrl,cmd t:k ku:cmd,ctrl"
 
+# Reset local develop branch
+alias grd="git checkout master
+git branch -D @develop
+git checkout @develop
+git pull origin @develop"
+
 # To split terminal in VSCode
 alias split="cliclick kd:ctrl,shift t:5 ku:ctrl,shift"
 
